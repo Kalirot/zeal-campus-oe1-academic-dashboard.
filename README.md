@@ -1,61 +1,114 @@
-# ZEAL CAMPUS — OE 1 Academic Dashboard
+# ZEAL CAMPUS
+### Live Academic Dashboard
 
-A live academic dashboard developed as an **OE 1 experiment**, using HTML, CSS, JavaScript, Google Sheets and a Google Apps Script JSON API.
+ZEAL CAMPUS brings student records, academic summaries and performance comparisons into one responsive web application. It connects to Google Sheets through a Google Apps Script API, so the dashboard reflects the connected dataset without manually editing the website.
 
-## Experiment
+Built with HTML, CSS and vanilla JavaScript, the project runs as a static website with no installation or build step.
 
-**Title:** Design and implementation of a responsive academic dashboard with live Google Sheets integration.
+## What you can do
 
-**Aim:** Build a working web application that retrieves academic records from an API, summarizes student performance and supports searching, filtering, sorting and exporting records.
+### Academic overview
+See the number of connected students, average Class 10 and Class 12 percentages, the leading semester performer and semester-level performance summaries. A leaderboard and data-derived insights help you explore the current records.
 
-## Implemented features
+### Student directory
+Search students by name or roll number, filter by performance band, sort columns and choose the number of records per page. Select a student to inspect their academic details, or export the current filtered records as CSV.
 
-- Dashboard with student count, school averages and leading semester performer
-- Student directory with name/roll search, performance filters, sorting and pagination
-- Individual student detail dialog and CSV export
-- Horizontal top-10 semester ranking with full student names
-- Class 10 and Class 12 average comparison with percentage-point difference
-- Semester analytics, API connection status and manual refresh
-- Responsive desktop/mobile interface and persistent light/dark theme
+### Academic analytics
+Compare the top 10 students using horizontal ranked bars with full names. View Class 10 and Class 12 cohort averages, their percentage-point difference, semester movement and the number of students below the attention threshold.
 
-## Technology and data flow
+### Live data status
+Check the API connection, record count, endpoint and last successful sync. Select **Sync now** after changing the source Google Sheet to retrieve updated records.
 
-Google Sheets → Google Apps Script → JSON API → JavaScript → dashboard and directory.
+### Appearance
+Switch between light and dark themes. The selected theme is saved in the browser, and the layout adapts to desktop and mobile screens.
 
-The frontend uses no build tools or login. Data is fetched from the existing endpoint; no fallback student dataset is bundled.
+## How it works
 
-The endpoint remains unchanged in `script.js`. Expected fields are `srNo`, `rollNo`, `name`, `tenth`, `twelfth`, `sem1` and `sem2`.
+```text
+Google Sheets
+     ↓
+Google Apps Script web app
+     ↓ JSON response
+JavaScript fetch and normalization
+     ↓
+Dashboard · Student directory · Analytics
+```
 
-## Run locally
+When the website opens, it requests the current records from the configured API. JavaScript normalizes the response, calculates summary metrics and renders the interface. Search, filtering, sorting and pagination operate on the fetched records in the browser.
 
-Download or clone this repository and open `index.html` in a modern browser. Internet access is required for the live API and Google Fonts. For hosted use, serve the files through any static web host.
+The application reads data from the source; it does not edit the Google Sheet. Refreshing is manual through **Sync now**, rather than continuous background polling. No sample student dataset is bundled.
 
-## GitHub Pages
+## Technology
 
-In repository Settings → Pages, choose **Deploy from a branch**, select **main** and **/ (root)**, then save. GitHub will display the website URL once deployment finishes.
-
-## Files
-
-| File | Purpose |
+| Technology | Role |
 | --- | --- |
-| `index.html` | Application structure and views |
-| `style.css` | Responsive layout, themes and visual design |
-| `script.js` | API integration, calculations and interactions |
+| HTML5 | Page structure, navigation, tables and dialogs |
+| CSS3 | Responsive layouts, cards, chart styling and themes |
+| Vanilla JavaScript | API requests, state, calculations and interactions |
+| SVG and HTML/CSS | Semester charts, rankings and comparison visuals |
+| Google Sheets | Source academic records |
+| Google Apps Script | JSON web API |
+| Browser local storage | Saved theme preference |
 
-## Calculations
+## Getting started
 
-Semester average uses available numeric semester scores. Excellent means average ≥ 8; good means 7 ≤ average < 8; attention means average < 7. The academic index uses weighted performance bands (100%, 78%, 48%); it is a custom summary, not an official institutional measure. School comparison uses cohort averages on a 0–100% scale.
+1. Download this repository or clone it.
+2. Open `index.html` in a modern browser, or serve the folder with a static web server.
+3. Wait for the live records to load.
+4. Use the sidebar to explore the overview, directory, analytics and data source.
 
-## Verification
+Internet access is needed for the live API and Google Fonts. No package installation, account registration or frontend build is required.
 
-Live API returned HTTP 200 and 10 records. Edge checks confirmed dashboard count, 10 visible ranking entries, theme switching, directory rows, empty search, excellent filtering, sorting interaction and no page overflow at 390px. The V7.1 chart fix ensures hidden canvases cannot displace the rendered charts.
+## API integration
 
-Multi-page pagination and CSV download require further end-to-end verification. This repository does not contain the Google Apps Script backend source.
+The existing endpoint is configured as `API_URL` in `script.js` and remains unchanged.
 
-## Result
+The response must be a JSON array with these fields:
 
-Implemented a responsive OE 1 academic dashboard that reads live records and provides academic summaries, comparisons and directory tools. Update the source Sheet and select **Sync now** to load current records.
+| Field | Description |
+| --- | --- |
+| `srNo` | Serial number |
+| `rollNo` | Student roll number |
+| `name` | Student name |
+| `tenth` | Class 10 percentage |
+| `twelfth` | Class 12 percentage |
+| `sem1` | Semester 1 score |
+| `sem2` | Semester 2 score |
 
-## Project notes
+The Google Apps Script backend source is maintained separately and is not included here.
 
-ZEAL CAMPUS is the project name; this repository does not claim official college endorsement. Only publish academic records you are authorized to expose through the source API. No student records are stored in this repository.
+## Performance metrics
+
+- **Semester average:** mean of the available numeric semester scores.
+- **Excellent:** semester average of 8.0 or above.
+- **Good:** semester average from 7.0 to below 8.0.
+- **Needs attention:** semester average below 7.0.
+- **School comparison:** cohort averages on a 0–100% scale; the difference is expressed in percentage points.
+- **Academic index:** a custom weighted summary of performance bands using weights of 100%, 78% and 48%. It is not an official institutional assessment.
+
+## Project structure
+
+```text
+├── index.html    # Application views and structure
+├── style.css     # Visual system, themes and responsive layout
+├── script.js     # API integration and application behavior
+└── README.md     # Project documentation
+```
+
+## Hosting with GitHub Pages
+
+Open **Settings → Pages**, choose **Deploy from a branch**, select **main** with **/ (root)** and save. GitHub will display the published address after deployment completes.
+
+The same files can also be hosted on another static web hosting service.
+
+## Verification status
+
+The live API returned HTTP 200 with 10 records. Edge browser checks covered the dashboard count, visible top-10 rankings, theme switching, directory rows, empty search, excellent filtering, sorting interaction and horizontal overflow at a 390px viewport.
+
+Multi-page pagination and the CSV download still require further end-to-end verification.
+
+## About this project
+
+ZEAL CAMPUS was developed as part of OE 1 coursework and is documented here as a working web application. The project name does not imply official college endorsement.
+
+Student records are fetched at runtime and are not committed to this repository.
