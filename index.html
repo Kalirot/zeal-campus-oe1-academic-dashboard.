@@ -1,0 +1,185 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<meta name="description" content="ZEAL Campus Academic Command Center">
+<title>ZEAL CAMPUS • Academic Command Center</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Manrope:wght@500;600;700;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<div class="app">
+  <div class="mobile-overlay" id="mobileOverlay"></div>
+
+  <aside class="sidebar" id="sidebar">
+    <div class="brand">
+      <div class="brand-mark">Z</div>
+      <div class="brand-text"><strong>ZEAL</strong><span>CAMPUS</span></div>
+    </div>
+
+    <div class="institution">
+      <div class="institution-mark">Z</div>
+      <div><strong>ZEAL College of Engineering<br>& Research</strong><span>NARHE · PUNE</span></div>
+    </div>
+
+    <div class="nav-section">
+      <div class="nav-label">WORKSPACE</div>
+      <button class="nav-item active" data-view="dashboard"><span class="nav-svg">⌂</span><span>Overview</span><b>01</b></button>
+      <button class="nav-item" data-view="students"><span class="nav-svg">♙</span><span>Students</span><b>02</b></button>
+      <button class="nav-item" data-view="analytics"><span class="nav-svg">◫</span><span>Analytics</span><b>03</b></button>
+    </div>
+
+    <div class="nav-section">
+      <div class="nav-label">SYSTEM</div>
+      <button class="nav-item" data-view="api"><span class="nav-svg">⌁</span><span>Data Source</span><i class="status-dot" id="sideStatus"></i></button>
+      <button class="nav-item" id="exportSide"><span class="nav-svg">⇩</span><span>Export Records</span></button>
+    </div>
+
+    <div class="sidebar-footer">
+      <button class="theme-row" id="themeBtn"><span id="themeIcon">☾</span><span>Appearance</span><b>Dark / Light</b></button>
+      <div class="connection">
+        <div><span class="status-dot online"></span><strong>Live connection</strong></div>
+        <small>Google Sheets · Apps Script</small>
+      </div>
+      <div class="version">VERSION 7 <span>•</span> WEB PORTAL</div>
+    </div>
+  </aside>
+
+  <main class="main">
+    <header class="topbar">
+      <div class="topbar-left">
+        <button class="menu-btn" id="menuBtn">☰</button>
+        <div class="crumb"><span>ZEAL CAMPUS</span><i>/</i><strong id="breadcrumbCurrent">Overview</strong></div>
+        <h1 id="pageTitle">Academic Overview</h1>
+      </div>
+      <div class="topbar-right">
+        <div class="sync-state"><span class="status-dot" id="topStatus"></span><span id="topStatusText">Checking API...</span></div>
+        <button class="top-icon" id="topThemeBtn" aria-label="Toggle theme">☾</button>
+        <button class="refresh-btn" id="refreshBtn"><span id="refreshIcon">↻</span> Sync now</button>
+      </div>
+    </header>
+
+    <div class="content">
+
+      <!-- OVERVIEW -->
+      <section class="view active" id="view-dashboard">
+        <div class="hero">
+          <div class="hero-left">
+            <div class="hero-kicker"><span class="pulse"></span> CAMPUS ACADEMIC OPERATIONS</div>
+            <h2>Academic overview.<br><em>Every student counts.</em></h2>
+            <p>A live academic workspace for ZEAL College of Engineering & Research. Monitor the current student record set, performance movement and key academic signals from one place.</p>
+            <div class="hero-actions">
+              <button class="hero-primary" onclick="document.querySelector('[data-view=students]').click()">Open student directory <b>↗</b></button>
+              <button class="hero-secondary" id="heroExportBtn" onclick="document.getElementById('exportSide').click()">Export records <b>↓</b></button>
+            </div>
+            <div class="hero-foot"><span>Sr. No. 39 · Narhe, Pune</span><i>•</i><span>Live academic dataset</span></div>
+          </div>
+
+          <div class="hero-right">
+            <div class="pulse-card">
+              <div class="pulse-head"><span>ACADEMIC PULSE</span><b>LIVE</b></div>
+              <div class="pulse-core">
+                <div class="pulse-ring"><div><strong id="heroHealth">--</strong><small>INDEX</small></div></div>
+                <div class="pulse-copy"><strong id="heroStudentCount">-- students</strong><span>records currently connected</span><small>Weighted semester bands: excellent 100%, good 78%, attention 48%</small></div>
+              </div>
+              <div class="pulse-bar"><span id="heroHealthBar"></span></div>
+            </div>
+            <div class="spotlight">
+              <div class="spotlight-label">CURRENT LEADER</div>
+              <div class="spotlight-main"><div class="leader-avatar" id="leaderAvatar">D</div><div><strong id="heroTopName">—</strong><span id="heroTopMeta">Leading semester average</span></div><b>01</b></div>
+            </div>
+          </div>
+        </div>
+
+        <div class="section-row">
+          <div><span class="section-eyebrow">AT A GLANCE</span><h3>Campus snapshot</h3></div>
+          <span class="data-note"><span class="status-dot online"></span> Updated from live records</span>
+        </div>
+
+        <div class="metric-grid">
+          <article class="metric"><div class="metric-top"><span>STUDENT RECORDS</span><i>01</i></div><strong id="totalStudents">—</strong><p>Active records in feed</p></article>
+          <article class="metric"><div class="metric-top"><span>AVERAGE · 10TH</span><i>10</i></div><strong id="avgTenth">—</strong><p>School-level performance</p></article>
+          <article class="metric"><div class="metric-top"><span>AVERAGE · 12TH</span><i>12</i></div><strong id="avgTwelfth">—</strong><p>School-level performance</p></article>
+          <article class="metric highlight"><div class="metric-top"><span>TOP PERFORMER</span><i>★</i></div><strong class="metric-name" id="topPerformer">—</strong><p id="topPerformerMeta">Leading academic record</p></article>
+        </div>
+
+        <div class="dashboard-grid">
+          <article class="panel trend-panel">
+            <div class="panel-head"><div><span>ACADEMIC TREND</span><h3>Semester performance</h3></div><b class="live-badge" id="trendBadge">Live</b></div>
+            <div class="chart-box"><canvas id="semesterChart"></canvas></div>
+            <div class="chart-foot"><span>Average score across connected records</span><b>Sem 1 → Sem 2</b></div>
+          </article>
+
+          <article class="panel background-panel">
+            <div class="panel-head"><div><span>SCHOOL HISTORY</span><h3>10th vs 12th</h3></div><b class="neutral-badge">Average</b></div>
+            <div class="chart-box"><canvas id="backgroundChart"></canvas></div>
+            <div class="chart-foot"><span>Previous academic performance</span><b>Percentage</b></div>
+          </article>
+
+          <article class="panel leader-panel">
+            <div class="panel-head"><div><span>LEADERSHIP BOARD</span><h3>Top academic performers</h3></div><button class="mini-link" data-view-target="students">View all →</button></div>
+            <div id="leaderBoard" class="leader-board"></div>
+          </article>
+
+          <article class="panel insights-panel">
+            <div class="panel-head"><div><span>CAMPUS SIGNALS</span><h3>Smart insights</h3></div><b class="neutral-badge">Live</b></div>
+            <div class="insights" id="insights"></div>
+          </article>
+        </div>
+
+        <article class="panel recent-panel">
+          <div class="panel-head"><div><span>LIVE DIRECTORY</span><h3>Highest semester averages</h3></div><button class="mini-link" data-view-target="students">Open directory →</button></div>
+          <div class="mini-table-wrap"><table class="mini-table"><thead><tr><th>STUDENT</th><th>ROLL</th><th>SEM 1</th><th>SEM 2</th><th>STATUS</th></tr></thead><tbody id="recentBody"></tbody></table></div>
+        </article>
+      </section>
+
+      <!-- STUDENTS -->
+      <section class="view" id="view-students">
+        <div class="page-intro"><div><span>STUDENT DIRECTORY</span><h2>Student intelligence</h2><p>Search, sort and inspect the live academic record set.</p></div><button class="secondary-btn" id="exportBtn">⇩ Export CSV</button></div>
+        <article class="panel directory-panel">
+          <div class="toolbar">
+            <div class="search-wrap"><span>⌕</span><input id="searchInput" type="search" placeholder="Search name or roll number..." autocomplete="off"><button id="clearSearch">×</button></div>
+            <select id="performanceFilter"><option value="all">All performance</option><option value="excellent">Excellent ≥ 8.0</option><option value="good">Good 7.0–7.9</option><option value="needs">Needs attention &lt; 7.0</option></select>
+            <select id="pageSize"><option value="10">10 / page</option><option value="25">25 / page</option><option value="50">50 / page</option></select>
+            <span class="result-count" id="resultCount">0 students</span>
+          </div>
+          <div id="stateArea"></div>
+          <div class="table-wrap" id="tableWrap"><table><thead><tr><th><button class="sort-btn" data-key="srNo"># ↕</button></th><th><button class="sort-btn" data-key="rollNo">Roll ↕</button></th><th><button class="sort-btn" data-key="name">Student ↕</button></th><th><button class="sort-btn" data-key="tenth">10th ↕</button></th><th><button class="sort-btn" data-key="twelfth">12th ↕</button></th><th><button class="sort-btn" data-key="sem1">Sem 1 ↕</button></th><th><button class="sort-btn" data-key="sem2">Sem 2 ↕</button></th><th>Performance</th></tr></thead><tbody id="studentTableBody"></tbody></table></div>
+          <div id="mobileCards" class="mobile-cards"></div>
+          <div class="pagination" id="pagination"><button id="prevPage">← Previous</button><span id="pageInfo">Page 1</span><button id="nextPage">Next →</button></div>
+        </article>
+      </section>
+
+      <!-- ANALYTICS -->
+      <section class="view" id="view-analytics">
+        <div class="page-intro"><div><span>PERFORMANCE INTELLIGENCE</span><h2>Academic analytics</h2><p>Compare semester performance and school-history percentages across the connected student records.</p></div></div>
+        <div class="analytics-grid">
+          <article class="panel chart-panel wide"><div class="panel-head"><div><span>RANKING</span><h3>Top 10 · semester average</h3></div></div><div class="chart-box tall"><canvas id="rankingChart"></canvas></div></article>
+          <article class="panel chart-panel"><div class="panel-head"><div><span>COMPARISON</span><h3>10th vs 12th</h3></div></div><div class="chart-box tall"><canvas id="schoolChart"></canvas></div></article>
+        </div>
+        <div class="analytics-cards" id="analyticsCards"></div>
+      </section>
+
+      <!-- API -->
+      <section class="view" id="view-api">
+        <div class="page-intro"><div><span>DATA INFRASTRUCTURE</span><h2>Live connection</h2><p>The technical layer behind the ZEAL Campus dashboard.</p></div></div>
+        <div class="api-grid">
+          <article class="panel api-card-main"><div class="api-status-big"><span class="status-dot online"></span><div><strong id="apiTitle">API Connected</strong><p id="apiMessage">Google Sheets → Apps Script → JSON</p></div></div><div class="api-url"><span>WEB APP ENDPOINT</span><code id="apiUrl">—</code></div><div class="api-stats"><div><span>Records</span><strong id="apiRecords">—</strong></div><div><span>Last Sync</span><strong id="apiSync">—</strong></div><div><span>Format</span><strong>JSON</strong></div></div></article>
+          <article class="panel flow-card"><span>ARCHITECTURE</span><h3>Data flow</h3><div class="flow"><div><b>01</b><span>Google Sheet</span><small>Student records</small></div><i>→</i><div><b>02</b><span>Apps Script</span><small>JSON endpoint</small></div><i>→</i><div><b>03</b><span>ZEAL Portal</span><small>Live dashboard</small></div></div><p>Change the Sheet, sync the portal, and the current records are reflected automatically.</p></article>
+        </div>
+      </section>
+
+      <div id="loadingOverlay" class="loading-overlay hidden"><div class="loader-card"><div class="spinner"></div><strong>Syncing academic records</strong><span>Connecting to the live JSON API…</span></div></div>
+
+      <div id="detailModal" class="modal hidden"><div class="modal-backdrop" id="modalBackdrop"></div><div class="modal-card"><button class="modal-close" id="closeModal">×</button><div class="detail-avatar" id="detailAvatar">A</div><span>STUDENT PROFILE</span><h2 id="detailTitle">Student</h2><p id="detailRoll">Roll No —</p><div class="detail-grid" id="detailGrid"></div><div class="detail-footer"><span>Overall semester average</span><strong id="detailPerformance">—</strong></div></div></div>
+    </div>
+    <footer><span>ZEAL CAMPUS · ACADEMIC COMMAND CENTER</span><span>Google Sheets + Apps Script JSON API · V7</span></footer>
+  </main>
+</div>
+
+<script src="script.js"></script>
+</body>
+</html>
